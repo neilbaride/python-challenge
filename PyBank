@@ -1,1 +1,40 @@
+import pandas as pd
+
+# Read the CSV file with financial data
+dataset = pd.read_csv("budget_data.csv")
+
+# Extract the 'Date' and 'Profit/Losses' columns from the dataset
+months = dataset['Date'].tolist()
+profits_losses = dataset['Profit/Losses'].tolist()
+
+# Calculate the total number of months
+total_months = len(months)
+
+# Calculate the net total amount of Profit/Losses
+net_total = sum(profits_losses)
+
+# Calculate the changes in Profit/Losses
+changes = [profits_losses[i] - profits_losses[i - 1] for i in range(1, total_months)]
+
+# Calculate the average of the changes in Profit/Losses
+average_change = sum(changes) / len(changes)
+
+# Find the greatest increase in profits (date and amount)
+max_increase_index = changes.index(max(changes))
+greatest_increase_date = months[max_increase_index + 1]
+greatest_increase_amount = max(changes)
+
+# Find the greatest decrease in losses (date and amount)
+max_decrease_index = changes.index(min(changes))
+greatest_decrease_date = months[max_decrease_index + 1]
+greatest_decrease_amount = min(changes)
+
+# Print the results
+print("Financial Analysis")
+print("----------------------------")
+print(f"Total Months: {total_months}")
+print(f"Total: ${net_total}")
+print(f"Average Change: ${average_change:.2f}")
+print(f"Greatest Increase in Profits: {greatest_increase_date} (${greatest_increase_amount})")
+print(f"Greatest Decrease in Losses: {greatest_decrease_date} (${greatest_decrease_amount})")
 
